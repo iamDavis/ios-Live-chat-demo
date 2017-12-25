@@ -39,10 +39,15 @@ class LoginController: UIViewController {
                 print(Error as Any)
                 return
             }
+            
+            guard let uid = user?.uid else {
+                return
+            }
             var ref: DatabaseReference!
             ref = Database.database().reference()
+            let usersReference = ref.child("usrs").child(uid)
             let values = ["name": name, "email": email]
-            ref.updateChildValues(values, withCompletionBlock: {(err, ref)
+            usersReference.updateChildValues(values, withCompletionBlock: {(err, ref)
                 in
                 
                 if err != nil {
@@ -91,7 +96,20 @@ class LoginController: UIViewController {
         
         return view
     }()
-    
+    lazy var loginRegisterSegmentedControl : UISegmentedControl = {
+        let sc = UISegmentedControl(items: ["Login","Register"])
+        sc.translatesAutoresizingMaskIntoConstraints = false
+        sc.tintColor = UIColor.white
+        sc.selectedSegmentIndex = 1
+        sc.addTarget(self, action: #selector(handleLoginRegisterChange), for: .valueChanged)
+        return sc
+    }()
+    @objc func handleLoginRegisterChange(){
+        let title = loginRegisterSegmentedControl.titleForSegment(at: loginRegisterSegmentedControl.selectedSegmentIndex)
+        loginRegisterButton.setTitle(title, for: .normal)
+        print(loginRegisterSegmentedControl.selectedSegmentIndex)
+        
+    }
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "ICON")
@@ -106,15 +124,25 @@ class LoginController: UIViewController {
         view.addSubview(inputsContainerView)
         view.addSubview(loginRegisterButton)
         view.addSubview(profileImageView)
+        view.addSubview(loginRegisterSegmentedControl)
         
         setupInputsContainerView()
         setuploginRegisterButton()
         setupProfileImageView()
+        setupLoginRegisterSegmentedControl()
+    }
+    func setupLoginRegisterSegmentedControl(){
+        //need x,y,width and height constraints
+        loginRegisterSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loginRegisterSegmentedControl.bottomAnchor.constraint(equalTo: inputsContainerView.topAnchor, constant: -12).isActive = true
+        loginRegisterSegmentedControl.widthAnchor.constraint(equalTo: inputsContainerView.widthAnchor).isActive = true
+        loginRegisterSegmentedControl.heightAnchor.constraint(equalToConstant: 20).isActive = true
+
     }
     func setupProfileImageView(){
         //need x,y,width and height constraints
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profileImageView.bottomAnchor.constraint(equalTo: inputsContainerView.topAnchor, constant: -15).isActive = true
+        profileImageView.bottomAnchor.constraint(equalTo: loginRegisterSegmentedControl.topAnchor, constant: -15).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
         
