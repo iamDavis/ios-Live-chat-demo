@@ -12,6 +12,7 @@
 		3FD515ED1FEF102E00D6053D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FD515EB1FEF102E00D6053D /* Main.storyboard */; };
 		3FD515EF1FEF102E00D6053D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FD515EE1FEF102E00D6053D /* Assets.xcassets */; };
 		3FD515F21FEF102E00D6053D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FD515F01FEF102E00D6053D /* LaunchScreen.storyboard */; };
+		3FD515FB1FEF166900D6053D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD515FA1FEF166900D6053D /* LoginController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		3FD515EE1FEF102E00D6053D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3FD515F11FEF102E00D6053D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3FD515F31FEF102E00D6053D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3FD515FA1FEF166900D6053D /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +56,23 @@
 		3FD515E61FEF102E00D6053D /* gameofchats */ = {
 			isa = PBXGroup;
 			children = (
+				3FD515F91FEF162800D6053D /* Controller */,
 				3FD515E71FEF102E00D6053D /* AppDelegate.swift */,
-				3FD515E91FEF102E00D6053D /* ViewController.swift */,
 				3FD515EB1FEF102E00D6053D /* Main.storyboard */,
 				3FD515EE1FEF102E00D6053D /* Assets.xcassets */,
 				3FD515F01FEF102E00D6053D /* LaunchScreen.storyboard */,
 				3FD515F31FEF102E00D6053D /* Info.plist */,
 			);
 			path = gameofchats;
+			sourceTree = "<group>";
+		};
+		3FD515F91FEF162800D6053D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3FD515E91FEF102E00D6053D /* ViewController.swift */,
+				3FD515FA1FEF166900D6053D /* LoginController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FD515EA1FEF102E00D6053D /* ViewController.swift in Sources */,
+				3FD515FB1FEF166900D6053D /* LoginController.swift in Sources */,
 				3FD515E81FEF102E00D6053D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
