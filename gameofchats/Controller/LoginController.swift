@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginController: UIViewController {
     let inputsContainerView: UIView = {
@@ -24,8 +25,34 @@ class LoginController: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         return button
     }()
+    @objc func handleRegister(){
+        guard let email = EmailTextField.text, let password = passwordTextField.text, let name = nameTextField.text
+            else {
+                print("Form is not vaild")
+                return
+        }
+        Auth.auth().createUser(withEmail: email, password: password, completion: {(user: User?, Error) in
+            if Error != nil {
+                print(Error as Any)
+                return
+            }
+            var ref: DatabaseReference!
+            ref = Database.database().reference()
+            let values = ["name": name, "email": email]
+            ref.updateChildValues(values, withCompletionBlock: {(err, ref)
+                in
+                
+                if err != nil {
+                    print(err)
+                    return
+                }
+                print("Saved users successfully into FireDB")
+            })
+        })
+    }
     let nameTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "name"
@@ -87,7 +114,7 @@ class LoginController: UIViewController {
     func setupProfileImageView(){
         //need x,y,width and height constraints
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profileImageView.bottomAnchor.constraint(equalTo: inputsContainerView.topAnchor, constant: -12).isActive = true
+        profileImageView.bottomAnchor.constraint(equalTo: inputsContainerView.topAnchor, constant: -15).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
         
