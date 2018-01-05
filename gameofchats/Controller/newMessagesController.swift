@@ -15,7 +15,7 @@ class newMessagesController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = UIBarButtonItem (title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
-        
+        tableView.register(UserCell.self, forCellReuseIdentifier: cellID)
         fetchUsers()
         
 }
@@ -30,9 +30,10 @@ class newMessagesController: UITableViewController {
                     let email = value["email"] as? String ?? "Email not found"
                     user.name = name
                     user.email = email
-                    print(user.name, user.email)
-               
+                 //   print(user.name, user.email)
+                    
                     self.usrs.append(user)
+                    
                     DispatchQueue.main.async { self.tableView.reloadData() }
                 }
             }
@@ -43,13 +44,27 @@ class newMessagesController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return usrs.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // use a hack for nowe
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellID)
-        cell.textLabel?.text = "Dummy TEXT LALALA"
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+        //let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellID)
+        let user = usrs[indexPath.row]
+        cell.textLabel?.text = user.name
+        cell.detailTextLabel?.text = user.email
         return cell
         
+    }
+}
+
+class UserCell: UITableViewCell{
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(Coder:) has not been implemented")
     }
 }
