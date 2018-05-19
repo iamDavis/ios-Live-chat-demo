@@ -2,14 +2,17 @@
 //  LoginController.swift
 //  gameofchats
 //
-//  Created by zippo1908 on 2017/12/23.
-//  Copyright © 2017年 zippo1908. All rights reserved.
+//  Created by zeyu deng on 2017/12/26.
+//  Copyright © 2017年 zeyu deng. All rights reserved.
 //
 
 import UIKit
 import Firebase
 
 class LoginController: UIViewController {
+    
+    var messageController: MessageController?
+    
     let inputsContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.white
@@ -20,7 +23,7 @@ class LoginController: UIViewController {
     }()
     lazy var loginRegisterButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = UIColor(r: 80, g: 101, b: 161)
+        button.backgroundColor = UIColor(r: 185, g: 13, b: 13)
         button.setTitle("Register", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -48,41 +51,11 @@ class LoginController: UIViewController {
                 print(error)
                 return
             }
+            self.messageController?.fetchUserAndSetupNavBarTitle()
             self.dismiss(animated: true, completion: nil)
         }
     }
-    @objc func handleRegister(){
-        guard let email = EmailTextField.text, let password = passwordTextField.text, let name = nameTextField.text
-            else {
-                print("Form is not vaild")
-                return
-        }
-        Auth.auth().createUser(withEmail: email, password: password, completion: {(user: User?, Error) in
-            if Error != nil {
-                print(Error as Any)
-                return
-            }
-            
-            guard let uid = user?.uid else {
-                return
-            }
-            var ref: DatabaseReference!
-            ref = Database.database().reference()
-            let usersReference = ref.child("usrs").child(uid)
-            let values = ["name": name, "email": email]
-            usersReference.updateChildValues(values, withCompletionBlock: {(err, ref)
-                in
-                
-                if err != nil {
-                    print(err)
-                    return
-                }
-                print("Saved users successfully into FireDB")
-                self.dismiss(animated: true, completion: nil)
-
-            })
-        })
-    }
+    
     let nameTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Name"
@@ -168,7 +141,7 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(r: 61, g: 91, b: 151)
+        view.backgroundColor = UIColor(r: 202, g: 21, b: 21)
         view.addSubview(inputsContainerView)
         view.addSubview(loginRegisterButton)
         view.addSubview(profileImageView)

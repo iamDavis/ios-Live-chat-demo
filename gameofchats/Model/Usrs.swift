@@ -2,14 +2,17 @@
 //  Usrs.swift
 //  gameofchats
 //
-//  Created by zippo1908 on 2017/12/26.
-//  Copyright © 2017年 zippo1908. All rights reserved.
+//  Created by zeyu deng on 2017/12/26.
+//  Copyright © 2017年 zeyu deng. All rights reserved.
 //
 
 import UIKit
 
-class Usrs: NSObject {
+ class Usrs: NSObject {
+    
+    var id: String?
     var name : String?
     var email : String?
+    var profileImageUrl: String?
 
 }
